@@ -8,7 +8,7 @@ function About() {
       <SEO title="About" />
       <article className="entry" lang="en">
         <div className="entry-content">
-          Hi. I am Agastya. And here, I discuss the books I have read.
+          Hi, there! I am Agastya, and these are my web-logs.
         </div>
       </article>
     </Layout>

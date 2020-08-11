@@ -2,41 +2,74 @@ const path = require('path');
 module.exports = {
   siteMetadata: {
     author: 'Agastya Chandrakant',
-    description: 'Discussions about the books I read.',
+    description: 'Web-log',
     email: 'acagastya@outlook.com',
     github: 'acagastya',
-    goodreads: 'acagastya',
-    instagram: 'acagastya',
-    repo: 'book-reviews',
-    siteName: 'Books पे बातें',
-    siteUrl: 'https://acagastya.github.io/book-reviews/',
-    title: 'Books पे बातें',
-    twitter: '@acagastya',
-    username: 'acagastya',
+    repo: 'web-log',
+    siteName: 'Web-log',
+    siteUrl: 'https://acagastya.github.io/web-log/',
+    title: 'Web-log',
   },
   plugins: [
     {
-      resolve: 'gatsby-plugin-disqus',
-      options: {
-        shortname: 'book-discussion',
-      },
-    },
-    {
       resolve: 'gatsby-source-filesystem',
       options: {
-        name: 'reviews',
-        path: path.join(__dirname, 'reviews'),
+        name: 'logs',
+        path: path.join(__dirname, 'web-log'),
       },
     },
+    'gatsby-transformer-remark',
     {
       resolve: 'gatsby-transformer-remark',
+      options: {
+        plugins: [
+          {
+            resolve: 'gatsby-remark-autolink-headers',
+            options: {
+              className: 'autolink-header-anchor',
+            },
+          },
+          'gatsby-remark-mermaid',
+          {
+            resolve: 'gatsby-remark-katex',
+            options: {
+              strict: 'ignore',
+            },
+          },
+          {
+            resolve: 'gatsby-remark-footnotes',
+            options: {
+              footnoteBackRefAnchorStyle: 'text-decoration: none; border: none',
+              footnoteBackRefDisplay: 'inline',
+              // footnoteBackRefInnerText: '^',
+              footnoteBackRefPreviousElementDisplay: 'inline',
+              useFootnoteMarkerText: false,
+            },
+          },
+          'gatsby-remark-abbr',
+          {
+            resolve: 'gatsby-remark-prismjs',
+            options: {
+              classPrefix: 'language-',
+              inlineCodeMarker: '›',
+              noInlineHighlight: false,
+              showLineNumbers: true,
+              prompt: {
+                user: 'john',
+                host: 'doe',
+                global: false,
+              },
+            },
+          },
+        ],
+      },
     },
     'gatsby-plugin-react-helmet',
     {
       resolve: 'gatsby-source-filesystem',
       options: {
         name: 'images',
-        path: path.join(__dirname, 'src', 'images'),
+        path: path.join(__dirname, 'images'),
       },
     },
     'gatsby-transformer-sharp',
@@ -44,13 +77,20 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-manifest',
       options: {
-        name: 'Books पे बातें',
-        short_name: 'Book reviews',
+        name: 'Agastya',
+        short_name: 'Web-log',
         start_url: '/',
         background_color: '#324996',
         theme_color: '#298BCC',
         display: 'minimal-ui',
-        icon: 'src/images/gatsby-icon.png', // This path is relative to the root of the site.
+        icon: './images/gatsby-icon.png', // This path is relative to the root of the site.
+      },
+    },
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'web-log',
+        path: path.join(__dirname, 'web-log'),
       },
     },
   ],

@@ -1,42 +1,41 @@
 import React from 'react';
 import { Link } from 'gatsby';
+import moment from 'moment';
+
 import Layout from '../components/layout';
 import SEO from '../components/seo';
 import { siteMetadata } from '../../gatsby-config';
 
 const { repo } = siteMetadata;
 
-function SingleAuthorTemplate({ pageContext }) {
-  const { author, posts } = pageContext;
+function SingleCatTemplate({ pageContext }) {
+  const { cat, posts } = pageContext;
   return (
     <Layout
-      heading={`Author: ${author} (${posts.length})`}
-      link={`/${repo}/authors`}
-      slug="authors"
+      heading={`Category: ${cat} (${posts.length})`}
+      link={`/${repo}/categories/`}
+      slug="category"
     >
-      <SEO title={`Author: ${author}`} />
+      <SEO title={`Category: ${cat}`} />
       <div className="list-container">
         <ul className="list">
           {posts.map(post => {
-            const {
-              author,
-              path,
-              title,
-            } = post.frontmatter;
+            const { date, path, title } = post.frontmatter;
+            const momentDate = moment(date);
+            const parsedDate = momentDate.format('MMM DD, YYYY');
+            const ISODate = momentDate.toISOString();
             return (
               <li key={path} className="list-item">
                 <article>
                   <div className="meta">
                     <span>
-                      <span className="screen-reader">Quote by </span>
-                      <span>
-                        <Link to={`/${repo}/authors/${author}`}>{author}</Link>
-                      </span>
+                      <span className="screen-reader">Posted on </span>
+                      <time dateTime={ISODate}>{parsedDate}</time>
                     </span>
                   </div>
                   <header className="list-item-header">
                     <h3 className="list-item-title">
-                      <Link to={`/${repo}/review/${path}`}>{title}</Link>
+                      <Link to={`/${repo}/logs${path}`}>{title}</Link>
                     </h3>
                   </header>
                 </article>
@@ -49,4 +48,4 @@ function SingleAuthorTemplate({ pageContext }) {
   );
 }
 
-export default SingleAuthorTemplate;
+export default SingleCatTemplate;

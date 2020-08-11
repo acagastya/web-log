@@ -19,19 +19,12 @@ function Layout({
           author
           description
           email
-          username
           title
         }
       }
     }
   `);
-  const {
-    author,
-    description,
-    email,
-    title,
-    username,
-  } = data.site.siteMetadata;
+  const { author, description, email, title } = data.site.siteMetadata;
 
   return (
     <div className="site">
@@ -48,7 +41,7 @@ function Layout({
       <main className="main" id="main">
         {children}
       </main>
-      <Footer author={author} email={email} username={username} />
+      <Footer author={author} email={email} />
     </div>
   );
 }

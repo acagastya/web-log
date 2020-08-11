@@ -30,7 +30,6 @@ function SEO({
             siteName
             siteUrl
             title
-            username
           }
         }
       }
@@ -56,7 +55,7 @@ function SEO({
       {blog && path ? (
         <meta
           property="og:url"
-          content={`${site.siteMetadata.siteUrl}/review${path}`}
+          content={`${site.siteMetadata.siteUrl}/logs${path}`}
         />
       ) : (
         <meta property="og:url" content={`${site.siteMetadata.siteUrl}`} />
@@ -71,7 +70,7 @@ function SEO({
       {path ? (
         <meta
           name="twitter:url"
-          content={`${site.siteMetadata.siteUrl}/review${path}`}
+          content={`${site.siteMetadata.siteUrl}/logs${path}`}
         />
       ) : (
         <meta name="twitter:url" content={`${site.siteMetadata.siteUrl}`} />

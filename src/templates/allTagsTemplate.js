@@ -10,7 +10,7 @@ function AllTagsTemplate({ pageContext }) {
   const { postsByTag, tags } = pageContext;
   const count = Object.values(postsByTag).map(el => el.length);
   const [max, min] = [Math.max(...count), Math.min(...count)];
-  tags.sort(function (str1, str2) {
+  tags.sort(function(str1, str2) {
     return str1.toLowerCase().localeCompare(str2.toLowerCase());
   });
   return (

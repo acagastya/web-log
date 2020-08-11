@@ -23,18 +23,18 @@ function Header({
         >
           <ul className="main-menu">
             <li>
-              {slug == 'book-reviews' ? (
-                <BoldEntry text="Book reviews" />
+              {slug == 'logs' ? (
+                <BoldEntry text="Logs" />
               ) : (
-                  <Link to={`/${repo}`}>Book reivews</Link>
-                )}
+                <Link to={`/${repo}`}>Logs</Link>
+              )}
             </li>
             <li>
               {slug == 'about' ? (
                 <BoldEntry text="About" />
               ) : (
-                  <Link to={`/${repo}/about`}>About</Link>
-                )}
+                <Link to={`/${repo}/about`}>About</Link>
+              )}
             </li>
           </ul>
         </nav>
@@ -44,7 +44,7 @@ function Header({
             <p className="site-title title">
               <Link to={link}>{siteTitle}</Link>
             </p>
-            {siteTitle == 'Book reviews' && (
+            {siteTitle == 'Logs' && (
               <p className="site-description subtitle">{description}</p>
             )}
           </div>

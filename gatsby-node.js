@@ -1,6 +1,6 @@
 const path = require('path');
 
-const createTagPages = function (createPage, posts) {
+const createTagPages = function(createPage, posts) {
   const allTagsTemplate = path.resolve(
     'src',
     'templates',
@@ -41,50 +41,51 @@ const createTagPages = function (createPage, posts) {
   });
 };
 
-const createAuthorPages = function (createPage, posts) {
-  const allAuthorsTemplate = path.resolve(
+const createCatPages = function(createPage, posts) {
+  const allCatsTemplate = path.resolve(
     'src',
     'templates',
-    'allAuthorsTemplate.js'
+    'allCatsTemplate.js'
   );
-  const singleAuthorTemplate = path.resolve(
+  const singleCatTemplate = path.resolve(
     'src',
     'templates',
-    'singleAuthorTemplate.js'
+    'singleCatTemplate.js'
   );
-  const postsByAuthor = {};
+  const postsByCat = {};
   posts.forEach(({ node }) => {
-    if (node.frontmatter.author) {
-      const author = node.frontmatter.author;
-      if (!postsByAuthor[author]) postsByAuthor[author] = [];
-      postsByAuthor[author].push(node);
+    if (node.frontmatter.categories) {
+      node.frontmatter.categories.forEach(cat => {
+        if (!postsByCat[cat]) postsByCat[cat] = [];
+        postsByCat[cat].push(node);
+      });
     }
   });
-  const authors = Object.keys(postsByAuthor);
+  const cats = Object.keys(postsByCat);
 
   createPage({
-    path: '/authors',
-    component: allAuthorsTemplate,
-    context: { authors, postsByAuthor },
+    path: '/categories/',
+    component: allCatsTemplate,
+    context: { cats, postsByCat },
   });
 
-  authors.forEach(author => {
-    const posts = postsByAuthor[author];
+  cats.forEach(cat => {
+    const posts = postsByCat[cat];
     createPage({
-      path: `/authors/${author}`,
-      component: singleAuthorTemplate,
+      path: `/categories/${cat}`,
+      component: singleCatTemplate,
       context: {
-        author,
+        cat,
         posts,
       },
     });
   });
 };
 
-exports.createPages = function ({ graphql, actions }) {
+exports.createPages = function({ graphql, actions }) {
   const { createPage } = actions;
 
-  return new Promise(function (resolve, reject) {
+  return new Promise(function(resolve, reject) {
     const blogPostTemplate = path.resolve('src', 'templates', 'blogPost.js');
     resolve(
       graphql(
@@ -97,7 +98,8 @@ exports.createPages = function ({ graphql, actions }) {
               edges {
                 node {
                   frontmatter {
-                    author
+                    categories
+                    date
                     path
                     tags
                     title
@@ -107,16 +109,18 @@ exports.createPages = function ({ graphql, actions }) {
             }
           }
         `
-      ).then(function (result) {
+      ).then(function(result) {
         const posts = result.data.allMarkdownRemark.edges;
         createTagPages(createPage, posts);
-        createAuthorPages(createPage, posts);
-        posts.forEach(function ({ node }, index) {
+        createCatPages(createPage, posts);
+        posts.forEach(function({ node }, index) {
           createPage({
-            path: 'review' + node.frontmatter.path,
+            path: 'logs' + node.frontmatter.path,
             component: blogPostTemplate,
             context: {
               pathSlug: node.frontmatter.path,
+              prev: index == posts.length - 1 ? null : posts[index + 1].node,
+              next: index == 0 ? null : posts[index - 1].node,
             },
           });
           resolve();

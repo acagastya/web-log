@@ -1,14 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Icon from './partials/Icon';
-import {
-  EmailSVG,
-  GitHubSVG,
-  InstagramSVG,
-  TwitterSVG,
-} from './partials/SVGIcon';
+import { EmailSVG } from './partials/SVGIcon';
 
-function Footer({ author, email, username }) {
+function Footer({ author, email }) {
   const currentYear = new Date().getFullYear();
   return (
     <footer id="footer" className="footer-container">
@@ -21,27 +16,6 @@ function Footer({ author, email, username }) {
                   link={`mailto:${email}`}
                   text="Contact via Email"
                   SVG={EmailSVG}
-                />
-              </li>
-              <li>
-                <Icon
-                  link={`https://twitter.com/${username}`}
-                  text="Open Twitter account in new tab"
-                  SVG={TwitterSVG}
-                />
-              </li>
-              <li>
-                <Icon
-                  link={`https://instagram.com/${username}`}
-                  text="Open Instagram account in new tab"
-                  SVG={InstagramSVG}
-                />
-              </li>
-              <li>
-                <Icon
-                  link={`https://github.com/${username}`}
-                  text="Open GitHub account in new tab"
-                  SVG={GitHubSVG}
                 />
               </li>
             </ul>
@@ -60,13 +34,11 @@ function Footer({ author, email, username }) {
 Footer.propTypes = {
   author: PropTypes.string,
   email: PropTypes.string,
-  username: PropTypes.string,
 };
 
 Footer.defaultProps = {
   author: 'Agastya',
   email: 'me@hanabi.in',
-  username: 'acagastya',
 };
 
 export default Footer;
